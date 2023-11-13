@@ -1,6 +1,6 @@
 # submit-kernel-without-abi-cxx11
-This file checks the availability of submitting a sycl kernel with compilation option `-D_GLIBCXX_USE_CXX11_ABI=0`.
-If unavailable, we can NOT register our operators, implemented by the sycl kernel, in PyTorch.
+This file checks the availability of submitting a sycl kernel with compilation option `-D_GLIBCXX_USE_CXX11_ABI=0` and catching the excepted exception.
+If unavailable, we can NOT register our operators in PyTorch, implemented by the sycl kernel.
 Because `std::string` is used in the operator registry API provided by PyTorch, which is built with `-D_GLIBCXX_USE_CXX11_ABI=0`.
 
 # how to run this demo
@@ -35,6 +35,7 @@ make
 [100%] Linking CXX executable demo
 [100%] Built target demo
 ./demo
+Allocation is out of device memory on the current platform.
 pass!
 ```
 * **We expect this demo can build pass and run pass when using [`-D_GLIBCXX_USE_CXX11_ABI=0`](https://github.com/guangyey/submit-kernel-without-abi-cxx11/blob/716a290b0caa738072d5cb1025b5955d46d32f7b/CMakeLists.txt#L33)**
